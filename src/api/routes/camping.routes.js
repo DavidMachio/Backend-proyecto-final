@@ -1,6 +1,7 @@
 const express = require("express");
 const {
   getAllCampings,
+  getCampingByName,
   getCampingByID,
   createCamping,
   deleteCamping,
@@ -10,7 +11,8 @@ const {
 const CampingRouter = express.Router();
 
 CampingRouter.get("/", getAllCampings);
-CampingRouter.get("/:id", getCampingByID);
+CampingRouter.get("/name/:name", getCampingByName);
+CampingRouter.get("/id/:id", getCampingByID);
 CampingRouter.post("/", createCamping);
 CampingRouter.delete("/:id", deleteCamping);
 CampingRouter.patch("/:id", updateCamping);
