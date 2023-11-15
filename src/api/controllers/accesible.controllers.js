@@ -41,12 +41,28 @@ const updateAccesible = async (req, res, next) => {
     const { id } = req.params;
     const newAccesible = new Accesible(req.body);
     newAccesible._id = id;
-    await Accesible.findByIdAndUpdate(id, newAccesible);
+    await Accesible.findByIdAndUpdate(id, newAccesible, { new: true });
     return res.status(200).json("Accesible modificado");
   } catch (error) {
     return res.status(500).json("Error  al modificar accesible", error);
   }
 };
+
+const addCamping = async (req, res, next) => {
+  try {
+    const { accesibleID } = req.body;
+    const { campingID } = req.body;
+    await Accesible.findByIdAndUpdate(
+      accesibleID,
+      { $push: { camping: campingID } },
+      { new: true }
+    );
+    return res.status(200).json("Camping added");
+  } catch (error) {
+    return res.status(500).json("Failed adding Camping");
+  }
+};
+
 const deleteAccesible = async (req, res, next) => {
   try {
     const { id } = req.params;
@@ -63,4 +79,5 @@ module.exports = {
   getAccesibleByTipo,
   updateAccesible,
   deleteAccesible,
+  addCamping,
 };

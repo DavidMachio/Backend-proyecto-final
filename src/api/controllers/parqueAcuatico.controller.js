@@ -35,12 +35,30 @@ const updateParqueAcuatico = async (req, res, next) => {
     const { id } = req.params;
     const newParqueAcuatico = new ParqueAcuatico(req.body);
     newParqueAcuatico._id = id;
-    await ParqueAcuatico.findByIdAndUpdate(id, newParqueAcuatico);
+    await ParqueAcuatico.findByIdAndUpdate(id, newParqueAcuatico, {
+      new: true,
+    });
     return res.status(200).json("Parque acuatico modificado");
   } catch (error) {
     return res.status(500).json("Error al modificar parque acuatico", error);
   }
 };
+
+const addCamping = async (req, res, next) => {
+  try {
+    const { parqueacuaticoID } = req.body;
+    const { campingID } = req.body;
+    await ParqueAcuatico.findByIdAndUpdate(
+      parqueacuaticoID,
+      { $push: { camping: campingID } },
+      { new: true }
+    );
+    return res.status(200).json("Camping added");
+  } catch (error) {
+    return res.status(500).json("Failed adding Camping");
+  }
+};
+
 const deleteParqueAcuatico = async (req, res, next) => {
   try {
     const { id } = req.params;
@@ -57,4 +75,5 @@ module.exports = {
   createParqueAcuatico,
   updateParqueAcuatico,
   deleteParqueAcuatico,
+  addCamping,
 };
