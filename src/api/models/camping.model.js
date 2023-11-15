@@ -67,6 +67,7 @@ const CampingSchema = new mongoose.Schema(
         trim: true,
         minlength: [9, "solo se puede 9"],
         maxlength: [9, "solo 9"],
+        default: 916744992,
       },
       website: {
         type: String,
