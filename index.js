@@ -1,14 +1,17 @@
 const express = require("express");
 require("dotenv").config();
+const cors = require("cors");
 const connect = require("./src/utils/db");
 
 const server = express();
 //servidor conectado
 connect();
 
+server.use(cors());
 server.use(express.json());
 server.use(express.urlencoded({ extended: false }));
 
+//routes
 const CampingRouter = require("./src/api/routes/camping.routes");
 server.use("/campings", CampingRouter);
 const AccesibleRouter = require("./src/api/routes/accesible.routes");
