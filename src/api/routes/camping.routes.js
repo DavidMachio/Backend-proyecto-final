@@ -14,3 +14,5 @@ CampingRouter.get("/:id", getCampingByID);
 CampingRouter.post("/", createCamping);
 CampingRouter.delete("/:id", deleteCamping);
 CampingRouter.patch("/:id", updateCamping);
+
+module.exports = CampingRouter;
