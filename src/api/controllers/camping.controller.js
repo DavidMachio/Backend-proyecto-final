@@ -8,6 +8,15 @@ const getAllCampings = async (req, res, next) => {
     return res.status(404).json("Camping no creado", error);
   }
 };
+const getCampingByName = async (req, res, next) => {
+  try {
+    const { name } = req.params;
+    const accesible = await Camping.findOne({ name: name });
+    return res.status(200).json(accesible);
+  } catch (error) {
+    return res.status(404).json("Camping no encontrado");
+  }
+};
 
 const getCampingByID = async (req, res, next) => {
   try {
@@ -53,6 +62,7 @@ const updateCamping = async (req, res, next) => {
 
 module.exports = {
   getAllCampings,
+  getCampingByName,
   getCampingByID,
   createCamping,
   deleteCamping,
