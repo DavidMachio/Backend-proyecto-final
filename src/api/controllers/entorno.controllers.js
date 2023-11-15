@@ -42,12 +42,28 @@ const updateEntorno = async (req, res, next) => {
     const { id } = req.params;
     const newEntorno = new Entorno(req.body);
     newEntorno._id = id;
-    await Entorno.findByIdAndUpdate(id, newEntorno);
+    await Entorno.findByIdAndUpdate(id, newEntorno, { new: true });
     return res.status(200).json("Entorno modificado");
   } catch (error) {
     return res.status(500).json("Error  al modificar entorno", error);
   }
 };
+
+const addCamping = async (req, res, next) => {
+  try {
+    const { entornoID } = req.body;
+    const { campingID } = req.body;
+    await Entorno.findByIdAndUpdate(
+      entornoID,
+      { $push: { camping: campingID } },
+      { new: true }
+    );
+    return res.status(200).json("Camping added");
+  } catch (error) {
+    return res.status(500).json("Failed adding Camping");
+  }
+};
+
 const deleteEntorno = async (req, res, next) => {
   try {
     const { id } = req.params;
@@ -64,4 +80,5 @@ module.exports = {
   createEntorno,
   updateEntorno,
   deleteEntorno,
+  addCamping,
 };

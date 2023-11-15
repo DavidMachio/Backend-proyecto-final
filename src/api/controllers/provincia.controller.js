@@ -31,12 +31,28 @@ const updateProvincia = async (req, res, next) => {
     const { id } = req.params;
     const newProvincia = new Provincia(req.body);
     newProvincia._id = id;
-    await Provincia.findByIdAndUpdate(id, newProvincia);
+    await Provincia.findByIdAndUpdate(id, newProvincia, { new: true });
     return res.status(200).json("Provincia modificado");
   } catch (error) {
     return res.status(500).json("Error al modificar provincia", error);
   }
 };
+
+const addCamping = async (req, res, next) => {
+  try {
+    const { provinciaID } = req.body;
+    const { campingID } = req.body;
+    await Provincia.findByIdAndUpdate(
+      provinciaID,
+      { $push: { camping: campingID } },
+      { new: true }
+    );
+    return res.status(200).json("Camping added");
+  } catch (error) {
+    return res.status(500).json("Failed adding Camping");
+  }
+};
+
 const deleteProvincia = async (req, res, next) => {
   try {
     const { id } = req.params;
@@ -52,4 +68,5 @@ module.exports = {
   createProvincia,
   updateProvincia,
   deleteProvincia,
+  addCamping,
 };
