@@ -5,7 +5,12 @@ const AccesibleSchema = new mongoose.Schema(
     img: {
       type: String,
       default:
-        "https://res.cloudinary.com/dt9uzksq0/image/upload/v1699967699/defaults/ju6lrgx15ehtvaimzi9o.jpg",
+        "https://res.cloudinary.com/dt9uzksq0/image/upload/v1700137174/portadaaccesibles_ssn9fw.jpg",
+    },
+    imgalt: {
+      type: String,
+      trim: true,
+      default: "Chico con silla de ruedas tomando el sol sentedo en el cesped",
     },
     descripcion: {
       type: String,

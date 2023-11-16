@@ -26,7 +26,7 @@ const UsuarioSchema = new mongoose.Schema(
       type: String,
       required: false,
       default:
-        "https://res.cloudinary.com/dt9uzksq0/image/upload/v1699967698/defaults/goxaw7wyftbmqrr20h04.jpg",
+        "https://res.cloudinary.com/dt9uzksq0/image/upload/v1700137175/profile_oqmxbe.jpg",
     },
     favoritos: [
       {

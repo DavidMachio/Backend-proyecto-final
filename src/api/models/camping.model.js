@@ -139,19 +139,19 @@ const CampingSchema = new mongoose.Schema(
         type: String,
         trim: true,
         default:
-          "https://res.cloudinary.com/dt9uzksq0/image/upload/v1699967698/defaults/ejsacjuzcahx0azf9afb.jpg",
+          "https://res.cloudinary.com/dt9uzksq0/image/upload/v1700137174/cover_iiyy6n.jpg",
       },
       img1: {
         type: String,
         trim: true,
         default:
-          "https://res.cloudinary.com/dt9uzksq0/image/upload/v1699967698/defaults/xe1awzfxaxqgnqqgzleg.jpg",
+          "https://res.cloudinary.com/dt9uzksq0/image/upload/v1700137174/img1_ocl00l.jpg",
       },
       img2: {
         type: String,
         trim: true,
         default:
-          "https://res.cloudinary.com/dt9uzksq0/image/upload/v1699967699/defaults/tmf2otpargzox0y1luad.jpg",
+          "https://res.cloudinary.com/dt9uzksq0/image/upload/v1700137174/img2_iezkzj.jpg",
       },
     },
     comentarios: [
