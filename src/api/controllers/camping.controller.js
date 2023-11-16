@@ -11,7 +11,7 @@ const getAllCampings = async (req, res, next) => {
 const getCampingByName = async (req, res, next) => {
   try {
     const { name } = req.params;
-    const accesible = await Camping.findOne({ name: name });
+    const accesible = await Camping.findOne({ nombre: name });
     return res.status(200).json(accesible);
   } catch (error) {
     return res.status(404).json("Camping no encontrado");

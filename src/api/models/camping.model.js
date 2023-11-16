@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 
 const CampingSchema = new mongoose.Schema(
   {
+    available: { type: String, default: true },
     provincia: {
       type: String,
       trim: true,
@@ -79,15 +80,9 @@ const CampingSchema = new mongoose.Schema(
         trim: true,
         default: "Calle Fray Luis de León nº 11",
       },
-      mail: {
-        type: String,
-        trim: true,
-        lowercase: true,
-        default: "cursos.portalentodigital@fundaciononce.es",
-      },
     },
     accesibilidad: { type: Boolean, default: false },
-    nivel_accesibilidad: { type: Number, enum: [1, 2, 3], default: 0 },
+    nivel_accesibilidad: { type: Number, enum: [0, 1, 2, 3], default: 0 },
     type: {
       visual: {
         adaptado: { type: Boolean, default: false },
@@ -125,44 +120,44 @@ const CampingSchema = new mongoose.Schema(
       trim: true,
       default: "https://maps.app.goo.gl/saYxGa9EkbBPT9rS7",
     },
-    bugalow: { type: Boolean, default: false },
-    parcela: { type: Boolean, default: false },
-    acampada_libre: { type: Boolean, default: false },
-    piscina: { type: Boolean, default: false },
-    parque_acuatico: { type: Boolean, default: false },
-    restaurante: { type: Boolean, default: false },
-    tienda: { type: Boolean, default: false },
-    mascotas: { type: Boolean, default: false },
+    bugalow: { type: Boolean, default: true },
+    parcela: { type: Boolean, default: true },
+    acampada_libre: { type: Boolean, default: true },
+    piscina: { type: Boolean, default: true },
+    parque_acuatico: { type: Boolean, default: true },
+    restaurante: { type: Boolean, default: true },
+    tienda: { type: Boolean, default: true },
+    mascotas: { type: Boolean, default: true },
     puntuacion: {
       type: Number,
       enum: [0, 1, 2, 3, 4, 5],
       default: 0,
     },
-    zona_infantil: { type: Boolean, default: false },
+    zona_infantil: { type: Boolean, default: true },
     imgs: {
       cover: {
         type: String,
         trim: true,
         default:
-          "https://hips.hearstapps.com/hmg-prod/images/slapen-boom-duitsland-1-1591732953.jpg",
+          "https://res.cloudinary.com/dt9uzksq0/image/upload/v1699967698/defaults/ejsacjuzcahx0azf9afb.jpg",
       },
       img1: {
         type: String,
         trim: true,
         default:
-          "https://www.espectaculosbcn.com/wp-content/uploads/2019/10/campings-monta%C3%B1a-cerca-barcelona2-1.jpg",
+          "https://res.cloudinary.com/dt9uzksq0/image/upload/v1699967698/defaults/xe1awzfxaxqgnqqgzleg.jpg",
       },
       img2: {
         type: String,
         trim: true,
         default:
-          "https://live.staticflickr.com/65535/48366191892_50f8a362eb_o.jpg",
+          "https://res.cloudinary.com/dt9uzksq0/image/upload/v1699967699/defaults/tmf2otpargzox0y1luad.jpg",
       },
     },
     comentarios: [
       {
         type: mongoose.Types.ObjectId,
-        ref: "camping",
+        ref: "comentario",
       },
     ],
   },

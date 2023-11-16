@@ -5,7 +5,7 @@ const AccesibleSchema = new mongoose.Schema(
     img: {
       type: String,
       default:
-        "https://www.sunrisemedical.es/getmedia/9f5548b8-0db7-4970-a9c8-9afa53274445/campings-accesibles.jpg?width=1200&height=627&ext=.jpg",
+        "https://res.cloudinary.com/dt9uzksq0/image/upload/v1699967699/defaults/ju6lrgx15ehtvaimzi9o.jpg",
     },
     descripcion: {
       type: String,

@@ -4,7 +4,7 @@ const validator = require("validator");
 
 const UsuarioSchema = new mongoose.Schema(
   {
-    name: {
+    nombre: {
       type: String,
       trim: true,
       required: true,
@@ -26,7 +26,7 @@ const UsuarioSchema = new mongoose.Schema(
       type: String,
       required: false,
       default:
-        "https://www.elnacional.cat/enblau/uploads/s1/17/36/94/18/pocholo-martinez-bordiu-gtres.jpeg",
+        "https://res.cloudinary.com/dt9uzksq0/image/upload/v1699967698/defaults/goxaw7wyftbmqrr20h04.jpg",
     },
     favoritos: [
       {

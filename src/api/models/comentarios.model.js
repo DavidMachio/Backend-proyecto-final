@@ -12,14 +12,14 @@ const ComentarioSchema = new mongoose.Schema(
         ref: "camping",
       },
     ],
-    user: [
-      {
-        type: mongoose.Types.ObjectId,
-        ref: "user",
-      },
-    ],
+    user: {
+      img: { type: String, trim: true },
+      nombre: { type: String, trim: true },
+    },
   },
   {
     timestamps: true,
   }
 );
+const Comentario = mongoose.model("comentario", ComentarioSchema);
+module.exports = Comentario;
