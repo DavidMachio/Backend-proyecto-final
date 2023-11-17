@@ -42,7 +42,7 @@ const CampingSchema = new mongoose.Schema(
         "Málaga",
         "Murcia",
         "Navarra",
-        "Orense",
+        "Ourense",
         "Palencia",
         "Pontevedra",
         "Salamanca",
