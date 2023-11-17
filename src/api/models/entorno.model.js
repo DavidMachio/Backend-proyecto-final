@@ -16,7 +16,7 @@ const EntornoSchema = new mongoose.Schema(
       type: String,
       require: true,
       trim: true,
-      enum: ["montaña", "playa"],
+      enum: ["montaña", "playa", "ciudad"],
     },
     campings: [
       {

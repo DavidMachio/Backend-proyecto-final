@@ -113,7 +113,7 @@ const CampingSchema = new mongoose.Schema(
       type: String,
       trim: true,
       required: true,
-      enum: ["playa", "montaña"],
+      enum: ["playa", "montaña", "ciudad"],
     },
     iframe: {
       type: String,
