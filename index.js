@@ -22,6 +22,8 @@ const ProvinciaRouter = require("./src/api/routes/provincia.routes");
 server.use("/provincias", ProvinciaRouter);
 const ParqueAcuaticoRouter = require("./src/api/routes/parqueacuatico.routes");
 server.use("/parquesacuaticos", ParqueAcuaticoRouter);
+const UsuarioRouter = require("./src/api/routes/usuario.routes");
+server.use("/usuario", UsuarioRouter);
 server.use("*", (req, res, next) => {
   return res.status(404).json("Route not found");
 });

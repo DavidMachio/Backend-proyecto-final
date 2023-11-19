@@ -16,6 +16,13 @@ const UsuarioSchema = new mongoose.Schema(
       required: true,
       validator: [validator.isEmail, "Email is not valid"],
     },
+    username: {
+      type: String,
+      trim: true,
+      required: true,
+      unique: true,
+    },
+
     password: {
       type: String,
       required: true,
@@ -28,6 +35,7 @@ const UsuarioSchema = new mongoose.Schema(
       default:
         "https://res.cloudinary.com/dt9uzksq0/image/upload/v1700137175/profile_oqmxbe.jpg",
     },
+    rol: { type: String, trim: true, default: "user" },
     favoritos: [
       {
         type: mongoose.Types.ObjectId,
@@ -37,15 +45,15 @@ const UsuarioSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
-  },
-  UsuarioSchema.pre("save", async function (next) {
-    try {
-      this.password = await bcrypt.hash(this.password, 10);
-      next();
-    } catch (error) {
-      next(error);
-    }
-  })
+  }
 );
+UsuarioSchema.pre("save", async function (next) {
+  try {
+    this.password = await bcrypt.hash(this.password, 10);
+    next();
+  } catch (error) {
+    next(error);
+  }
+});
 const Usuario = mongoose.model("usuario", UsuarioSchema);
 module.exports = Usuario;
