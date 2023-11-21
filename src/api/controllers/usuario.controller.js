@@ -1,11 +1,26 @@
 const usuario = require("../models/usuario.model");
 const bcrypt = require("bcrypt");
+const { deleteimgCloudinary } = require("../../middlewares/files.middleware");
+
+const getAllUser = async (req, res, next) => {
+  try {
+    const usuarios = await usuario.find();
+    return res.status(200).json(usuarios);
+  } catch (error) {
+    return next(new Error("no se encuentran usuarios"));
+  }
+};
 
 const createUser = async (req, res, next) => {
   try {
-    const usuarioNuevo = new usuario(req.body);
+    const usuarioNuevo = new usuario({
+      ...req.body,
+      avatar: req.file
+        ? req.file.path
+        : "https://res.cloudinary.com/dt9uzksq0/image/upload/v1700137175/profile_oqmxbe.jpg",
+    });
     //buscamos los datos para poder comprovar si estan duplicados
-    const mailDuplicado = await usuario.findOne({ email: usuarioNuevo.email });
+    /* const mailDuplicado = await usuario.findOne({ email: usuarioNuevo.email });
     const usernameDuplicado = await usuario.findOne({
       username: usuarioNuevo.username,
     });
@@ -16,16 +31,40 @@ const createUser = async (req, res, next) => {
     //con este vemos si se repite el username
     if (usernameDuplicado) {
       return next("username no disponible");
-    }
+    }*/
     //guardamops usuario en db
-    const usuarioDB = await usuarioNuevo.save();
+    await usuarioNuevo.save();
     //revolvemos los mensajes de guardado
-    return res.status(201).json(usuarioDB);
+    return res.status(201).json(usuarioNuevo);
   } catch (error) {
-    return next(error);
+    return next(new Error("no se crea"));
+  }
+};
+
+const updateUser = async (req, res, next) => {
+  try {
+    const { id, avatar } = req.params;
+    // deleteimgCloudinary(avatar)
+    const nuevoUsuario = new usuario(req.body);
+    nuevoUsuario._id = id;
+    await usuario.findByIdAndUpdate(
+      id,
+      {
+        ...req.body,
+        avatar: req.file
+          ? req.file.path
+          : "https://res.cloudinary.com/dt9uzksq0/image/upload/v1700137175/profile_oqmxbe.jpg",
+      },
+      { new: true }
+    );
+    return res.status(200).json("usuario modificado");
+  } catch (error) {
+    return next(new Error("error al modificar usuario"));
   }
 };
 
 module.exports = {
   createUser,
+  updateUser,
+  getAllUser,
 };

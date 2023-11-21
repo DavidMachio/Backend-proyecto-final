@@ -32,8 +32,6 @@ const UsuarioSchema = new mongoose.Schema(
     avatar: {
       type: String,
       required: false,
-      default:
-        "https://res.cloudinary.com/dt9uzksq0/image/upload/v1700137175/profile_oqmxbe.jpg",
     },
     rol: { type: String, trim: true, default: "user" },
     favoritos: [
