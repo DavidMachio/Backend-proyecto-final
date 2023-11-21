@@ -20,7 +20,7 @@ const createUser = async (req, res, next) => {
         : "https://res.cloudinary.com/dt9uzksq0/image/upload/v1700137175/profile_oqmxbe.jpg",
     });
     //buscamos los datos para poder comprovar si estan duplicados
-    /* const mailDuplicado = await usuario.findOne({ email: usuarioNuevo.email });
+    const mailDuplicado = await usuario.findOne({ email: usuarioNuevo.email });
     const usernameDuplicado = await usuario.findOne({
       username: usuarioNuevo.username,
     });
@@ -31,7 +31,7 @@ const createUser = async (req, res, next) => {
     //con este vemos si se repite el username
     if (usernameDuplicado) {
       return next("username no disponible");
-    }*/
+    }
     //guardamops usuario en db
     await usuarioNuevo.save();
     //revolvemos los mensajes de guardado
@@ -44,7 +44,7 @@ const createUser = async (req, res, next) => {
 const updateUser = async (req, res, next) => {
   try {
     const { id, avatar } = req.params;
-    // deleteimgCloudinary(avatar)
+    deleteimgCloudinary(avatar);
     const nuevoUsuario = new usuario(req.body);
     nuevoUsuario._id = id;
     await usuario.findByIdAndUpdate(
@@ -63,8 +63,37 @@ const updateUser = async (req, res, next) => {
   }
 };
 
+const deleteUser = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const usuarioABorrar = await usuario.findById(id);
+    deleteimgCloudinary(usuarioABorrar.avatar);
+    await usuario.findByIdAndDelete(id);
+    return res.status(200).json("Usuario borrado");
+  } catch (error) {
+    return next(new Error("No lo borre"));
+  }
+};
+
+const addFavorito = async (req, res, next) => {
+  try {
+    const { usuarioID } = req.body;
+    const { campingID } = req.body;
+    await usuario.findByIdAndUpdate(
+      usuarioID,
+      { $push: { favoritos: campingID } },
+      { new: true }
+    );
+    return res.status(200).json("camping added");
+  } catch (error) {
+    return next(new Error("no se agrego nada"));
+  }
+};
+
 module.exports = {
   createUser,
   updateUser,
   getAllUser,
+  deleteUser,
+  addFavorito,
 };

@@ -17,13 +17,6 @@ const AccesibleSchema = new mongoose.Schema(
       trim: true,
       default: "Aqui encontrarás los mejores campings accesibles en España",
     },
-    tipo: {
-      type: String,
-      require: true,
-      trim: true,
-      enum: ["visual", "auditivo", "movilidad"],
-    },
-
     campings: [
       {
         type: mongoose.Types.ObjectId,

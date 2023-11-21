@@ -12,10 +12,6 @@ const ComentarioSchema = new mongoose.Schema(
         ref: "camping",
       },
     ],
-    user: {
-      img: { type: String, trim: true },
-      nombre: { type: String, trim: true },
-    },
   },
   {
     timestamps: true,
