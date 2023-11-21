@@ -2,10 +2,12 @@ const express = require("express");
 require("dotenv").config();
 //const cors = require("cors");
 const connect = require("./src/utils/db");
+const { configCloudinary } = require("./src/middlewares/files.middleware");
 
 const server = express();
 //servidor conectado
 connect();
+configCloudinary();
 
 //server.use(cors());
 server.use(express.json());
