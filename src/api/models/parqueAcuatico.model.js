@@ -9,7 +9,12 @@ const ParqueAcuaticoSchema = new mongoose.Schema(
     img: {
       type: String,
       default:
-        "https://www.campingsalon.com/wp-content/uploads/2017/05/la-marina-3.jpg",
+        "https://res.cloudinary.com/dt9uzksq0/image/upload/v1700137174/parqueacuatico_h0k3lv.jpg",
+    },
+    imgalt: {
+      type: String,
+      trim: true,
+      default: "Foto de un parque acuatico con toboganes",
     },
     descripcion: {
       type: String,
