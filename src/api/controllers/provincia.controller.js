@@ -1,4 +1,4 @@
-const Provincia = require("../models/provincia.model");
+/*const Provincia = require("../models/provincia.model");
 
 const getProvincias = async (req, res, next) => {
   try {
@@ -70,3 +70,4 @@ module.exports = {
   deleteProvincia,
   addCamping,
 };
+*/

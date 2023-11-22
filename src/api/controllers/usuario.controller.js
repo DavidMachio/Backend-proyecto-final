@@ -1,6 +1,6 @@
 const usuario = require("../models/usuario.model");
 const bcrypt = require("bcrypt");
-const { deleteimgCloudinary } = require("../../middlewares/files.middleware");
+const { generateToken } = require("../../utils/token");
 
 const getAllUser = async (req, res, next) => {
   try {
@@ -44,7 +44,6 @@ const createUser = async (req, res, next) => {
 const updateUser = async (req, res, next) => {
   try {
     const { id, avatar } = req.params;
-    deleteimgCloudinary(avatar);
     const nuevoUsuario = new usuario(req.body);
     nuevoUsuario._id = id;
     await usuario.findByIdAndUpdate(
@@ -67,7 +66,6 @@ const deleteUser = async (req, res, next) => {
   try {
     const { id } = req.params;
     const usuarioABorrar = await usuario.findById(id);
-    deleteimgCloudinary(usuarioABorrar.avatar);
     await usuario.findByIdAndDelete(id);
     return res.status(200).json("Usuario borrado");
   } catch (error) {
@@ -90,10 +88,35 @@ const addFavorito = async (req, res, next) => {
   }
 };
 
+const login = async (req, res, next) => {
+  try {
+    const existingUser = await usuario.findOne({ username: req.body.username });
+    console.log(req.body);
+    if (!existingUser) {
+      return next(new Error("Este usuario no existe"));
+    }
+    if (bcrypt.compareSync(req.body.password, existingUser.password)) {
+      const token = generateToken(existingUser._id, existingUser.username);
+      console.log(token);
+      return res.status(200).json({
+        username: existingUser.username,
+        id: existingUser._id,
+        avatar: existingUser.avatar,
+        token: token,
+      });
+    } else {
+      return next(new Error("Password incorrect"));
+    }
+  } catch (error) {
+    return next(new Error("Failed login"));
+  }
+};
+
 module.exports = {
   createUser,
   updateUser,
   getAllUser,
   deleteUser,
   addFavorito,
+  login,
 };

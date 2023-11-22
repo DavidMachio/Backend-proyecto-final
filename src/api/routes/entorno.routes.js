@@ -12,7 +12,6 @@ const EntornoRouter = express.Router();
 EntornoRouter.get("/", getEntornos);
 EntornoRouter.get("/place/:place", getEntornoByPlace);
 EntornoRouter.get("/id/:id", getEntornoById);
-//EntornoRouter.get("/:tipo", getEntornoByTipo);
 EntornoRouter.post("/", createEntorno);
 EntornoRouter.patch("/", updateEntorno);
 EntornoRouter.put("/add-camping", addCamping);

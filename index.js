@@ -1,6 +1,6 @@
 const express = require("express");
 require("dotenv").config();
-//const cors = require("cors");
+const cors = require("cors");
 const connect = require("./src/utils/db");
 const { configCloudinary } = require("./src/middlewares/files.middleware");
 
@@ -9,7 +9,11 @@ const server = express();
 connect();
 configCloudinary();
 
-//server.use(cors());
+server.use(
+  cors({
+    origin: ["http://localhost:5173"],
+  })
+);
 server.use(express.json());
 server.use(express.urlencoded({ extended: false }));
 
@@ -20,12 +24,14 @@ const AccesibleRouter = require("./src/api/routes/accesible.routes");
 server.use("/accesibles", AccesibleRouter);
 const EntornoRouter = require("./src/api/routes/entorno.routes");
 server.use("/entornos", EntornoRouter);
-const ProvinciaRouter = require("./src/api/routes/provincia.routes");
-server.use("/provincias", ProvinciaRouter);
+/*const ProvinciaRouter = require("./src/api/routes/provincia.routes");
+server.use("/provincias", ProvinciaRouter);*/
 const ParqueAcuaticoRouter = require("./src/api/routes/parqueacuatico.routes");
 server.use("/parquesacuaticos", ParqueAcuaticoRouter);
 const UsuarioRouter = require("./src/api/routes/usuario.routes");
 server.use("/usuario", UsuarioRouter);
+const ComentarioRouter = require("./src/api/routes/comentario.routes");
+server.use("/comentarios", ComentarioRouter);
 server.use("*", (req, res, next) => {
   return res.status(404).json("Route not found");
 });

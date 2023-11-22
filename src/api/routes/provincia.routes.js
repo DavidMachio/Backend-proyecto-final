@@ -1,4 +1,4 @@
-const express = require("express");
+/*const express = require("express");
 const {
   getProvincias,
   getProvinciaById,
@@ -15,3 +15,4 @@ ProvinciaRouter.patch("/", updateProvincia);
 ProvinciaRouter.put("/add-camping", addCamping);
 ProvinciaRouter.delete("/", deleteProvincia);
 module.exports = ProvinciaRouter;
+*/

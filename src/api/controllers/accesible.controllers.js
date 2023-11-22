@@ -2,28 +2,19 @@ const Accesible = require("../models/accesible.model");
 
 const getAccesibles = async (req, res, next) => {
   try {
-    const accesibles = await Accesible.find().populate("camping");
+    const accesibles = await Accesible.find().populate("campings");
     return res.status(200).json(accesibles);
   } catch (error) {
-    return res.status(404).json("Not found accesibles campings", error);
+    return next(new Error("bad request"));
   }
 };
 const getAccesibleById = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const accesible = await Accesible.findById(id).populate("camping");
+    const accesible = await Accesible.findById(id).populate("campings");
     return res.status(200).json(accesible);
   } catch (error) {
-    return res.status(404).json("Category not found", error);
-  }
-};
-const getAccesibleByTipo = async (req, res, next) => {
-  try {
-    const { tipo } = req.params;
-    const accesible = await Accesible.findOne({ tipo: tipo });
-    return res.status(200).json(accesible);
-  } catch (error) {
-    return res.status(404).json("Accesible not found");
+    return next(new Error("No se encuentra informacion con esta id"));
   }
 };
 
@@ -33,7 +24,7 @@ const createAccesible = async (req, res, next) => {
     await newAccesible.save();
     return res.status(201).json(newAccesible);
   } catch (error) {
-    return res.status(500).json("Failled creating category", error);
+    return next(new Error("Fallo al crear"));
   }
 };
 const updateAccesible = async (req, res, next) => {
@@ -44,7 +35,7 @@ const updateAccesible = async (req, res, next) => {
     await Accesible.findByIdAndUpdate(id, newAccesible, { new: true });
     return res.status(200).json("Accesible modificado");
   } catch (error) {
-    return res.status(500).json("Error  al modificar accesible", error);
+    return next(new Error("Error al modificar"));
   }
 };
 
@@ -54,12 +45,12 @@ const addCamping = async (req, res, next) => {
     const { campingID } = req.body;
     await Accesible.findByIdAndUpdate(
       accesibleID,
-      { $push: { camping: campingID } },
+      { $push: { campings: campingID } },
       { new: true }
     );
     return res.status(200).json("Camping added");
   } catch (error) {
-    return res.status(500).json("Failed adding Camping");
+    return next(new Error("Error al agregar camping"));
   }
 };
 
@@ -69,14 +60,13 @@ const deleteAccesible = async (req, res, next) => {
     await Accesible.findByIdAndDelete(id);
     return res.status(200).json("Accesible  borrado");
   } catch (error) {
-    return res.status(500).json("Error al borrar accesble", error);
+    return next(new Error("Error al borrar"));
   }
 };
 module.exports = {
   getAccesibles,
   getAccesibleById,
   createAccesible,
-  getAccesibleByTipo,
   updateAccesible,
   deleteAccesible,
   addCamping,

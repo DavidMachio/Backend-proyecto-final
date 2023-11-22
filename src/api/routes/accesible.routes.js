@@ -6,14 +6,12 @@ const {
   updateAccesible,
   deleteAccesible,
   addCamping,
-  //getAccesibleByTipo,
 } = require("../controllers/accesible.controllers");
 const AccesibleRouter = express.Router();
 AccesibleRouter.get("/", getAccesibles);
 AccesibleRouter.get("/:id", getAccesibleById);
-//AccesibleRouter.get("/:tipo", getAccesibleByTipo);
 AccesibleRouter.post("/", createAccesible);
-AccesibleRouter.patch("/", updateAccesible);
+AccesibleRouter.patch("/:id", updateAccesible);
 AccesibleRouter.put("/add-camping", addCamping);
-AccesibleRouter.delete("/", deleteAccesible);
+AccesibleRouter.delete("/:id", deleteAccesible);
 module.exports = AccesibleRouter;

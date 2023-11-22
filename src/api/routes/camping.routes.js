@@ -6,7 +6,9 @@ const {
   createCamping,
   deleteCamping,
   updateCamping,
+  getCampingByProv,
 } = require("../controllers/camping.controller");
+const { isAuth, isAdmin } = require("../../middlewares/auth.middleware");
 
 const CampingRouter = express.Router();
 
@@ -16,5 +18,5 @@ CampingRouter.get("/id/:id", getCampingByID);
 CampingRouter.post("/", createCamping);
 CampingRouter.delete("/:id", deleteCamping);
 CampingRouter.patch("/:id", updateCamping);
-
-module.exports = CampingRouter;
+CampingRouter.get("/prov/:provincia", getCampingByProv),
+  (module.exports = CampingRouter);

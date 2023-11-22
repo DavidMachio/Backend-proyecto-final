@@ -1,31 +1,29 @@
 const Entorno = require("../models/entorno.model");
 const getEntornos = async (req, res, next) => {
   try {
-    const entornos = await Entorno.find().populate("camping");
+    const entornos = await Entorno.find().populate("campings");
     return res.status(200).json(entornos);
   } catch (error) {
-    return res.status(404).json("Entorno no encontrado", error);
+    return next(new Error("No se puede conseguir los entornos"));
   }
 };
 const getEntornoByPlace = async (req, res, next) => {
   try {
     const { place } = req.params;
-    const entorno = await Entorno.findByOne({ place: place }).populate(
-      "camping"
-    );
+    const entorno = await Entorno.find({ place: place }).populate("campings");
     return res.status(200).json(entorno);
   } catch (error) {
-    return res.status(404).json("Entorno no encontrado", error);
+    return next(new Error("Entorno no encontrado"));
   }
 };
 
 const getEntornoById = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const entorno = await Entorno.findById(id).populate(campings);
+    const entorno = await Entorno.findById(id).populate("campings");
     return res.status(200).json(entorno);
   } catch (error) {
-    return res.status(404).json("Entorno no encontrado", error);
+    return next(new Error("Entorno no encontrado"));
   }
 };
 const createEntorno = async (req, res, next) => {
@@ -34,7 +32,7 @@ const createEntorno = async (req, res, next) => {
     await newEntorno.save();
     return res.status(201).json(newEntorno);
   } catch (error) {
-    return res.status(500).json("Failled creating entorno", error);
+    return next(new Error("Entorno no creado"));
   }
 };
 const updateEntorno = async (req, res, next) => {
@@ -45,7 +43,7 @@ const updateEntorno = async (req, res, next) => {
     await Entorno.findByIdAndUpdate(id, newEntorno, { new: true });
     return res.status(200).json("Entorno modificado");
   } catch (error) {
-    return res.status(500).json("Error  al modificar entorno", error);
+    return next(new Error("Entorno no modificado"));
   }
 };
 
@@ -55,12 +53,12 @@ const addCamping = async (req, res, next) => {
     const { campingID } = req.body;
     await Entorno.findByIdAndUpdate(
       entornoID,
-      { $push: { camping: campingID } },
+      { $push: { campings: campingID } },
       { new: true }
     );
     return res.status(200).json("Camping added");
   } catch (error) {
-    return res.status(500).json("Failed adding Camping");
+    return next(new Error("Camping no agregado"));
   }
 };
 
@@ -70,7 +68,7 @@ const deleteEntorno = async (req, res, next) => {
     await Entorno.findByIdAndDelete(id);
     return res.status(200).json("Entorno  borrado");
   } catch (error) {
-    return res.status(500).json("Error al borrar entorno", error);
+    return next(new Error("Entorno no borrado"));
   }
 };
 module.exports = {

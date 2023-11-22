@@ -2,10 +2,10 @@ const ParqueAcuatico = require("../models/parqueAcuatico.model");
 
 const getParquesAcuaticos = async (req, res, next) => {
   try {
-    const parquesAcuaticos = await ParqueAcuatico.find().populate("camping");
+    const parquesAcuaticos = await ParqueAcuatico.find().populate("campings");
     return res.status(200).json(parquesAcuaticos);
   } catch (error) {
-    return res.status(404).json("Parques acuaticos no encontrados", error);
+    return next(new Error("ParqueAcuatico no encontrado"));
   }
 };
 
@@ -13,11 +13,11 @@ const getParqueAcuaticoById = async (req, res, next) => {
   try {
     const { id } = req.params;
     const parqueAcuatico = await ParqueAcuatico.findById(id).populate(
-      "camping"
+      "campings"
     );
     return res.status(200).json(parqueAcuatico);
   } catch (error) {
-    return res.status(404).json("Parque acuatico no encontrado", error);
+    return next(new Error("ParqueAcuatico no encontrado"));
   }
 };
 
@@ -27,7 +27,7 @@ const createParqueAcuatico = async (req, res, next) => {
     await newParqueAcuatico.save();
     return res.status(200).json(newParqueAcuatico);
   } catch (error) {
-    return res.status(500).json("Fallo al crear nuevo parque acuatico", error);
+    return next(new Error("ParqueAcuatico no encontrado"));
   }
 };
 const updateParqueAcuatico = async (req, res, next) => {
@@ -40,7 +40,7 @@ const updateParqueAcuatico = async (req, res, next) => {
     });
     return res.status(200).json("Parque acuatico modificado");
   } catch (error) {
-    return res.status(500).json("Error al modificar parque acuatico", error);
+    return next(new Error("ParqueAcuatico no encontrado"));
   }
 };
 
@@ -50,12 +50,12 @@ const addCamping = async (req, res, next) => {
     const { campingID } = req.body;
     await ParqueAcuatico.findByIdAndUpdate(
       parqueacuaticoID,
-      { $push: { camping: campingID } },
+      { $push: { campings: campingID } },
       { new: true }
     );
     return res.status(200).json("Camping added");
   } catch (error) {
-    return res.status(500).json("Failed adding Camping");
+    return next(new Error("ParqueAcuatico no encontrado"));
   }
 };
 
@@ -65,7 +65,7 @@ const deleteParqueAcuatico = async (req, res, next) => {
     await ParqueAcuatico.findByIdAndDelete(id);
     return res.status(200).json("Parque acuatico eliminado");
   } catch (error) {
-    return res.status(500).json("Error al eliminar el parque acuatico");
+    return next(new Error("ParqueAcuatico no encontrado"));
   }
 };
 

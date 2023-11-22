@@ -34,6 +34,7 @@ const UsuarioSchema = new mongoose.Schema(
       required: false,
     },
     rol: { type: String, trim: true, default: "user" },
+    about: { type: String, trim: true },
     favoritos: [
       {
         type: mongoose.Types.ObjectId,
