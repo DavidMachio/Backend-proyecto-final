@@ -8,6 +8,64 @@ const getAllCampings = async (req, res, next) => {
     return next(new Error("Camping no creado"));
   }
 };
+
+const getAllByPage = async (req, res, next) => {
+  try {
+    if (req.query.page && !isNaN(parseInt(req.query.page))) {
+      const numCampings = await Camping.countDocuments();
+      let page = parseInt(req.query.page);
+      let limit = req.query.limit ? parseInt(req.query.limit) : 10;
+      let numPages =
+        numCampings % limit > 0 ? numCampings / limit + 1 : numCampings / limit;
+      console.log(numPages);
+      if (page > numPages || page < 1) {
+        page = 1;
+      }
+      const skip = (page - 1) * limit;
+      const allCampingsDB = await Camping.find().skip(skip).limit(limit);
+      return res.status(200).json({
+        info: {
+          totalCampings: numCampings,
+          page: page,
+          limit: limit,
+          next:
+            numPages >= page + 1
+              ? `/campings?page=${page + 1}&limit=${limit}`
+              : null,
+          prev:
+            page != 1
+              ? `https://spaincampingsdb.vercel.app/campings?page=${
+                  page - 1
+                }&limit=${limit}`
+              : null,
+        },
+        campings: allCampingsDB,
+      });
+    } else {
+      const allCampingsDB = await Camping.find().limit(10);
+      const numCampings = await Camping.countDocuments();
+      return res.status(200).json({
+        info: {
+          totalCampings: numCampings,
+          page: 1,
+          limit: 10,
+          next:
+            numCampings > 10
+              ? `https://spaincampingsdb.vercel.app/campings?page=2&limit=10`
+              : null,
+          prev: null,
+        },
+        campings: allCampingsDB,
+      });
+    }
+  } catch (error) {
+    return next(
+      "No se han podido solicitar los campings a la base de datos",
+      error
+    );
+  }
+};
+
 const getCampingByName = async (req, res, next) => {
   try {
     const { name } = req.params;
@@ -78,4 +136,5 @@ module.exports = {
   deleteCamping,
   updateCamping,
   getCampingByProv,
+  getAllByPage,
 };
