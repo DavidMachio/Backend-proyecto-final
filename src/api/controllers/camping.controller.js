@@ -30,9 +30,13 @@ const getAllByPage = async (req, res, next) => {
           limit: limit,
           next:
             numPages >= page + 1
+<<<<<<< HEAD
               ? `https://spaincampingsdb.vercel.app/campings?page=${
                   page + 1
                 }&limit=${limit}`
+=======
+              ? `/campings?page=${page + 1}&limit=${limit}`
+>>>>>>> a5f6ef7f7a6134f908157188b89236f0a39d8d7a
               : null,
           prev:
             page != 1

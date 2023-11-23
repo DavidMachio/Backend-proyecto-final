@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+/*const mongoose = require("mongoose");
 const ProvinceSchema = new mongoose.Schema({
   provincia: {
     type: String,
@@ -66,3 +66,4 @@ const ProvinceSchema = new mongoose.Schema({
 });
 const Province = mongoose.model("province", ProvinceSchema);
 module.exports = Province;
+*/
