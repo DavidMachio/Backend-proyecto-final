@@ -14,7 +14,7 @@ const getAllByPage = async (req, res, next) => {
     if (req.query.page && !isNaN(parseInt(req.query.page))) {
       const numCampings = await Camping.countDocuments();
       let page = parseInt(req.query.page);
-      let limit = req.query.limit ? parseInt(req.query.limit) : 10;
+      let limit = req.query.limit ? parseInt(req.query.limit) : 20;
       let numPages =
         numCampings % limit > 0 ? numCampings / limit + 1 : numCampings / limit;
       console.log(numPages);
@@ -50,7 +50,7 @@ const getAllByPage = async (req, res, next) => {
         info: {
           totalCampings: numCampings,
           page: 1,
-          limit: 10,
+          limit: 20,
           next:
             numCampings > 10
               ? `https://spaincampingsdb.vercel.app/campings?page=2&limit=10`
