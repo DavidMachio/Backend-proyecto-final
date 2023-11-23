@@ -12,7 +12,7 @@ const getAllCampings = async (req, res, next) => {
 const getAllByPage = async (req, res, next) => {
   try {
     if (req.query.page && !isNaN(parseInt(req.query.page))) {
-      const numCampings = Camping.countDocuments();
+      const numCampings = await Camping.countDocuments();
       let page = parseInt(req.query.page);
       let limit = req.query.limit ? parseInt(req.query.limit) : 10;
       let numPages =
@@ -30,7 +30,13 @@ const getAllByPage = async (req, res, next) => {
           limit: limit,
           next:
             numPages >= page + 1
-              ? `/campings?page=${page - 1}&limit=${limit}`
+              ? `/campings?page=${page + 1}&limit=${limit}`
+              : null,
+          prev:
+            page != 1
+              ? `https://spaincampingsdb.vercel.app/campings?page=${
+                  page - 1
+                }&limit=${limit}`
               : null,
         },
         campings: allCampingsDB,
@@ -43,7 +49,10 @@ const getAllByPage = async (req, res, next) => {
           totalCampings: numCampings,
           page: 1,
           limit: 10,
-          next: numCampings > 10 ? `/campings?page=2&limit=10` : null,
+          next:
+            numCampings > 10
+              ? `https://spaincampingsdb.vercel.app/campings?page=2&limit=10`
+              : null,
           prev: null,
         },
         campings: allCampingsDB,
