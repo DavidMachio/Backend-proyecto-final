@@ -2,7 +2,9 @@ const ParqueAcuatico = require("../models/parqueAcuatico.model");
 
 const getParquesAcuaticos = async (req, res, next) => {
   try {
-    const parquesAcuaticos = await ParqueAcuatico.find().populate("campings");
+    const parquesAcuaticos = await ParqueAcuatico.find()
+      .sort({ provincia: 1 })
+      .populate("campings");
     return res.status(200).json(parquesAcuaticos);
   } catch (error) {
     return next(new Error("ParqueAcuatico no encontrado"));
