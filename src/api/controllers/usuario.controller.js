@@ -102,6 +102,11 @@ const login = async (req, res, next) => {
         username: existingUser.username,
         id: existingUser._id,
         avatar: existingUser.avatar,
+        nombre: existingUser.nombre,
+        email: existingUser.email,
+        rol: existingUser.rol,
+        about: existingUser.about,
+        favoritos: existingUser.favoritos,
         token: token,
       });
     } else {
