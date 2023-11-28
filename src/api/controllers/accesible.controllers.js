@@ -8,6 +8,7 @@ const getAccesibles = async (req, res, next) => {
     return next(new Error("bad request"));
   }
 };
+
 const getAccesibleById = async (req, res, next) => {
   try {
     const { id } = req.params;
