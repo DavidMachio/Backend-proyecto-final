@@ -10,7 +10,9 @@ const getEntornos = async (req, res, next) => {
 const getEntornoByPlace = async (req, res, next) => {
   try {
     const { place } = req.params;
-    const entorno = await Entorno.find({ place: place }).populate("campings");
+    const entorno = await Entorno.findOne({ place: place }).populate(
+      "campings"
+    );
     return res.status(200).json(entorno);
   } catch (error) {
     return next(new Error("Entorno no encontrado"));
