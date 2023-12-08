@@ -4,6 +4,11 @@ const validator = require("validator");
 
 const UsuarioSchema = new mongoose.Schema(
   {
+    bloqueado: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
     nombre: {
       type: String,
       trim: true,
@@ -32,6 +37,10 @@ const UsuarioSchema = new mongoose.Schema(
     avatar: {
       type: String,
       required: false,
+    },
+    imgcover: {
+      type: String,
+      require: false,
     },
     rol: { type: String, trim: true, default: "user" },
     about: { type: String, trim: true },
