@@ -17,7 +17,7 @@ const createUser = async (req, res, next) => {
       ...req.body,
       avatar: req.file
         ? req.file.path
-        : "https://res.cloudinary.com/dt9uzksq0/image/upload/v1700137175/profile_oqmxbe.jpg",
+        : "https://res.cloudinary.com/dt9uzksq0/image/upload/v1701970077/profiledefault_joguzg.jpg",
     });
     //buscamos los datos para poder comprovar si estan duplicados
     const mailDuplicado = await usuario.findOne({ email: usuarioNuevo.email });
@@ -52,8 +52,9 @@ const updateUser = async (req, res, next) => {
         ...req.body,
         avatar: req.file
           ? req.file.path
-          : "https://res.cloudinary.com/dt9uzksq0/image/upload/v1700137175/profile_oqmxbe.jpg",
+          : "https://res.cloudinary.com/dt9uzksq0/image/upload/v1701970077/profiledefault_joguzg.jpg",
       },
+
       { new: true }
     );
     return res.status(200).json("usuario modificado");
