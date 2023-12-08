@@ -2,7 +2,7 @@ const Camping = require("../models/camping.model");
 
 const getAllCampings = async (req, res, next) => {
   try {
-    const campings = await Camping.find();
+    const campings = await Camping.find().populate("comentarios");
     return res.status(200).json(campings);
   } catch (error) {
     return next(new Error("Camping no creado"));
@@ -71,7 +71,9 @@ const getAllByPage = async (req, res, next) => {
 const getCampingByName = async (req, res, next) => {
   try {
     const { name } = req.params;
-    const accesible = await Camping.findOne({ nombre: name });
+    const accesible = await Camping.findOne({ nombre: name }).populate(
+      "comentarios"
+    );
     return res.status(200).json(accesible);
   } catch (error) {
     return next(new Error("Camping no encontrado"));
@@ -81,7 +83,7 @@ const getCampingByName = async (req, res, next) => {
 const getCampingByID = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const camping = await Camping.findById(id);
+    const camping = await Camping.findById(id).populate("comentarios");
     return res.status(200).json(camping);
   } catch (error) {
     return next(new Error("Camping no encontrado"));
@@ -123,10 +125,27 @@ const updateCamping = async (req, res, next) => {
 const getCampingByProv = async (req, res, next) => {
   try {
     const { provincia } = req.params;
-    const accesible = await Camping.find({ provincia: provincia });
+    const accesible = await Camping.find({ provincia: provincia }).populate(
+      "comentarios"
+    );
     return res.status(200).json(accesible);
   } catch (error) {
     return next(new Error("Campings no encontrado"));
+  }
+};
+
+const addComment = async (req, res, next) => {
+  try {
+    const { campingID } = req.body;
+    const { commentID } = req.body;
+    await Camping.findByIdAndUpdate(
+      campingID,
+      { $push: { comentarios: commentID } },
+      { new: true }
+    );
+    return res.status(200).json("comment add");
+  } catch (error) {
+    return next(new Error("Error al agregar comentario"));
   }
 };
 
@@ -139,4 +158,5 @@ module.exports = {
   updateCamping,
   getCampingByProv,
   getAllByPage,
+  addComment,
 };

@@ -4,7 +4,7 @@ const createComentario = async (req, res, next) => {
   try {
     const newComent = new comentario({
       ...req.body,
-      imgs: req.file ? req.file.path : "",
+      img: req.file ? req.file.path : "",
     });
     await newComent.save();
     return res.status(200).json(newComent);

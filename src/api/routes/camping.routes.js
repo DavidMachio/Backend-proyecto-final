@@ -8,6 +8,7 @@ const {
   updateCamping,
   getCampingByProv,
   getAllByPage,
+  addComment,
 } = require("../controllers/camping.controller");
 const { isAuth, isAdmin } = require("../../middlewares/auth.middleware");
 
@@ -21,4 +22,5 @@ CampingRouter.post("/", createCamping);
 CampingRouter.delete("/:id", deleteCamping);
 CampingRouter.patch("/:id", updateCamping);
 CampingRouter.get("/prov/:provincia", getCampingByProv),
-  (module.exports = CampingRouter);
+  CampingRouter.put("/addcom", addComment);
+module.exports = CampingRouter;
