@@ -108,7 +108,9 @@ const removeFavorito = async (req, res, next) => {
 
 const login = async (req, res, next) => {
   try {
-    const existingUser = await usuario.findOne({ username: req.body.username });
+    const existingUser = await usuario
+      .findOne({ username: req.body.username })
+      .populate("favoritos");
     console.log(req.body);
     if (!existingUser) {
       return next(new Error("Este usuario no existe"));
