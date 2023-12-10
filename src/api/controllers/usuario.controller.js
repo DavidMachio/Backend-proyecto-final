@@ -18,6 +18,9 @@ const createUser = async (req, res, next) => {
       avatar: req.file
         ? req.file.path
         : "https://res.cloudinary.com/dt9uzksq0/image/upload/v1701970077/profiledefault_joguzg.jpg",
+      imgcover: req.file
+        ? req.file.path
+        : "https://res.cloudinary.com/dt9uzksq0/image/upload/v1702154458/placeholder-image_p1zmh1.jpg",
     });
     //buscamos los datos para poder comprovar si estan duplicados
     const mailDuplicado = await usuario.findOne({ email: usuarioNuevo.email });
@@ -32,7 +35,7 @@ const createUser = async (req, res, next) => {
     if (usernameDuplicado) {
       return next("username no disponible");
     }
-    //guardamops usuario en db
+    //guardamos usuario en db
     await usuarioNuevo.save();
     //revolvemos los mensajes de guardado
     return res.status(201).json(usuarioNuevo);
@@ -43,7 +46,7 @@ const createUser = async (req, res, next) => {
 
 const updateUser = async (req, res, next) => {
   try {
-    const { id, avatar } = req.params;
+    const { id, avatar, imgcover } = req.params;
     const nuevoUsuario = new usuario(req.body);
     nuevoUsuario._id = id;
     await usuario.findByIdAndUpdate(
@@ -53,6 +56,9 @@ const updateUser = async (req, res, next) => {
         avatar: req.file
           ? req.file.path
           : "https://res.cloudinary.com/dt9uzksq0/image/upload/v1701970077/profiledefault_joguzg.jpg",
+        imgcover: req.file
+          ? req.file.path
+          : "https://res.cloudinary.com/dt9uzksq0/image/upload/v1702154458/placeholder-image_p1zmh1.jpg",
       },
 
       { new: true }
