@@ -89,6 +89,23 @@ const addFavorito = async (req, res, next) => {
   }
 };
 
+const removeFavorito = async (req, res, next) => {
+  try {
+    const { usuarioID } = req.body;
+    const { campingID } = req.body;
+    // aqui usamos $pull para poder quitar el favorito del array
+    await usuario.findByIdAndUpdate(
+      usuarioID,
+      { $pull: { favoritos: campingID } },
+      { new: true }
+    );
+
+    return res.status(200).json("camping removed");
+  } catch (error) {
+    return next(new Error("no se elimino nada"));
+  }
+};
+
 const login = async (req, res, next) => {
   try {
     const existingUser = await usuario.findOne({ username: req.body.username });
@@ -124,6 +141,7 @@ module.exports = {
   getAllUser,
   deleteUser,
   addFavorito,
+  removeFavorito,
   login,
 };
 
