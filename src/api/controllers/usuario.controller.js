@@ -144,6 +144,7 @@ const login = async (req, res, next) => {
         rol: existingUser.rol,
         about: existingUser.about,
         favoritos: existingUser.favoritos,
+        bloqueado: existingUser.bloqueado,
         token: token,
       });
     } else {
