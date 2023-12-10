@@ -7,6 +7,7 @@ const {
   deleteUser,
   addFavorito,
   removeFavorito,
+  getUserByID,
   login,
 } = require("../controllers/usuario.controller");
 
@@ -20,6 +21,7 @@ UsuarioRouter.patch("/:id", upload.single("avatar"), updateUser);
 UsuarioRouter.delete("/:id", deleteUser);
 UsuarioRouter.put("/add-favorito", addFavorito);
 UsuarioRouter.put("/remove-favorito", removeFavorito);
+UsuarioRouter.get("/:id", getUserByID);
 UsuarioRouter.post("/login", login);
 
 module.exports = UsuarioRouter;

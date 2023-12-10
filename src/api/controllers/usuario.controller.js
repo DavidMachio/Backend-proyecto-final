@@ -11,6 +11,16 @@ const getAllUser = async (req, res, next) => {
   }
 };
 
+const getUserByID = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const user = await usuario.findById(id).populate("favoritos");
+    return res.status(200).json(user);
+  } catch (error) {
+    return next(new Error("Camping no encontrado"));
+  }
+};
+
 const createUser = async (req, res, next) => {
   try {
     const usuarioNuevo = new usuario({
@@ -144,6 +154,7 @@ module.exports = {
   deleteUser,
   addFavorito,
   removeFavorito,
+  getUserByID,
   login,
 };
 
