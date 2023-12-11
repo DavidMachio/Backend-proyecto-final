@@ -3,6 +3,7 @@ const express = require("express");
 const {
   createUser,
   updateUser,
+  updateAvatar,
   getAllUser,
   deleteUser,
   addFavorito,
@@ -17,7 +18,8 @@ const UsuarioRouter = express.Router();
 
 UsuarioRouter.get("/", getAllUser);
 UsuarioRouter.post("/", upload.single("avatar"), createUser);
-UsuarioRouter.patch("/:id", upload.single("avatar"), updateUser);
+UsuarioRouter.patch("/avatar/:id", upload.single("avatar"), updateAvatar);
+UsuarioRouter.patch("/datos/:id", updateUser);
 UsuarioRouter.delete("/:id", deleteUser);
 UsuarioRouter.put("/add-favorito", addFavorito);
 UsuarioRouter.put("/remove-favorito", removeFavorito);

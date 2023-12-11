@@ -28,9 +28,6 @@ const createUser = async (req, res, next) => {
       avatar: req.file
         ? req.file.path
         : "https://res.cloudinary.com/dt9uzksq0/image/upload/v1701970077/profiledefault_joguzg.jpg",
-      imgcover: req.file
-        ? req.file.path
-        : "https://res.cloudinary.com/dt9uzksq0/image/upload/v1702154458/placeholder-image_p1zmh1.jpg",
     });
     //buscamos los datos para poder comprovar si estan duplicados
     const mailDuplicado = await usuario.findOne({ email: usuarioNuevo.email });
@@ -56,7 +53,18 @@ const createUser = async (req, res, next) => {
 
 const updateUser = async (req, res, next) => {
   try {
-    const { id, avatar, imgcover } = req.params;
+    const { id } = req.params;
+    const newUser = new usuario(req.body);
+    newUser._id = id;
+    await usuario.findByIdAndUpdate(id, newUser, { new: true });
+    return res.status(200).json("Usuario modificado");
+  } catch (error) {
+    return next(new Error("Error al modificar"));
+  }
+};
+const updateAvatar = async (req, res, next) => {
+  try {
+    const { id, avatar } = req.params;
     const nuevoUsuario = new usuario(req.body);
     nuevoUsuario._id = id;
     await usuario.findByIdAndUpdate(
@@ -66,16 +74,13 @@ const updateUser = async (req, res, next) => {
         avatar: req.file
           ? req.file.path
           : "https://res.cloudinary.com/dt9uzksq0/image/upload/v1701970077/profiledefault_joguzg.jpg",
-        imgcover: req.file
-          ? req.file.path
-          : "https://res.cloudinary.com/dt9uzksq0/image/upload/v1702154458/placeholder-image_p1zmh1.jpg",
       },
 
       { new: true }
     );
-    return res.status(200).json("usuario modificado");
+    return res.status(200).json("Avatar modificado");
   } catch (error) {
-    return next(new Error("error al modificar usuario"));
+    return next(new Error("Error al modificar avatar"));
   }
 };
 
@@ -157,6 +162,7 @@ const login = async (req, res, next) => {
 
 module.exports = {
   createUser,
+  updateAvatar,
   updateUser,
   getAllUser,
   deleteUser,
