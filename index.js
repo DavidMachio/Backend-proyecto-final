@@ -32,8 +32,6 @@ const UsuarioRouter = require("./src/api/routes/usuario.routes");
 server.use("/usuario", UsuarioRouter);
 const ComentarioRouter = require("./src/api/routes/comentario.routes");
 server.use("/comentarios", ComentarioRouter);
-const TodolistRouter = require("./src/api/routes/todolist.routes");
-server.use("/Todolist", TodolistRouter);
 server.use("*", (req, res, next) => {
   return res.status(404).json("Route not found");
 });

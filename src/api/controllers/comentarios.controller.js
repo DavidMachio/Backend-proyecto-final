@@ -4,7 +4,9 @@ const createComentario = async (req, res, next) => {
   try {
     const newComent = new comentario({
       ...req.body,
-      img: req.file ? req.file.path : "",
+      img: req.file
+        ? req.file.path
+        : "https://res.cloudinary.com/dt9uzksq0/image/upload/v1702154458/placeholder-image_p1zmh1.jpg",
     });
     await newComent.save();
     return res.status(200).json(newComent);
