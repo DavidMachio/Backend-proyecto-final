@@ -34,6 +34,9 @@ const ComentarioRouter = require("./src/api/routes/comentario.routes");
 server.use("/comentarios", ComentarioRouter);
 const TodolistRouter = require("./src/api/routes/todolist.routes");
 server.use("/todolist", TodolistRouter);
+const BlogcomRouter = require("./src/api/routes/blogcom.routes");
+server.use("/blogcom", BlogcomRouter);
+
 server.use("*", (req, res, next) => {
   return res.status(404).json("Route not found");
 });

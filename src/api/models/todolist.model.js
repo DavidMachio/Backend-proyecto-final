@@ -8,8 +8,8 @@ const todolistSchema = new mongoose.Schema(
     descripcion: { type: String, trim: true },
     imgcomment: { type: String, trim: true },
     userID: { type: String, trim: true },
-    revisar: { type: Boolean },
-    confirmado: { type: Boolean },
+    revisar: { type: Boolean, default: false },
+    confirmado: { type: Boolean, default: false },
   },
   {
     timestamps: true,

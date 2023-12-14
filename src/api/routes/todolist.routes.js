@@ -14,6 +14,6 @@ const TodolistRouter = express.Router();
 TodolistRouter.get("/", getallTodo);
 TodolistRouter.patch("/:id", updateTodo);
 TodolistRouter.delete("/:id", deleteTodo);
-TodolistRouter.post("/", upload.single("avatar"), createTodo);
+TodolistRouter.post("/", upload.single("imgcomment"), createTodo);
 
 module.exports = TodolistRouter;
