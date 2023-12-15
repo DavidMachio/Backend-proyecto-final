@@ -11,7 +11,7 @@ configCloudinary();
 
 server.use(
   cors({
-    origin: ["http://localhost:5173", "http://campcesible.vercel.app"],
+    origin: ["http://localhost:5173", "*"],
   })
 );
 server.use(express.json());
