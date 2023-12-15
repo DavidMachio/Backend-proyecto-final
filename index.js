@@ -9,11 +9,7 @@ const server = express();
 connect();
 configCloudinary();
 
-server.use(
-  cors({
-    origin: ["http://localhost:5173", "*"],
-  })
-);
+server.use(cors());
 server.use(express.json());
 server.use(express.urlencoded({ extended: false }));
 
