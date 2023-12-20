@@ -9,9 +9,9 @@ const server = express();
 connect();
 configCloudinary();
 
-server.use(
+app.use(
   cors({
-    origin: "*",
+    origin: ["https://campcesible.vercel.app"],
   })
 );
 server.use(express.json());
