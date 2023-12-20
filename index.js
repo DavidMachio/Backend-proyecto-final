@@ -1,7 +1,6 @@
 const express = require("express");
 require("dotenv").config();
 const cors = require("cors");
-
 const connect = require("./src/utils/db");
 const { configCloudinary } = require("./src/middlewares/files.middleware");
 
@@ -10,9 +9,9 @@ const server = express();
 connect();
 configCloudinary();
 
-app.use(
+server.use(
   cors({
-    origin: ["https://campcesible.vercel.app"],
+    origin: "*",
   })
 );
 server.use(express.json());
