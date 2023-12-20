@@ -1,6 +1,11 @@
 const express = require("express");
 require("dotenv").config();
 const cors = require("cors");
+app.use(
+  cors({
+    origin: ["https://www.section.io", "https://www.google.com/"],
+  })
+);
 const connect = require("./src/utils/db");
 const { configCloudinary } = require("./src/middlewares/files.middleware");
 
