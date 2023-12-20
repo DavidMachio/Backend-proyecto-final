@@ -6,16 +6,16 @@ const { configCloudinary } = require("./src/middlewares/files.middleware");
 
 const server = express();
 //servidor conectado
-connect();
-configCloudinary();
 
 server.use(
   cors({
-    origin: "*",
+    origin: ["https://campcesible.vercel.app"],
   })
 );
 server.use(express.json());
 server.use(express.urlencoded({ extended: false }));
+connect();
+configCloudinary();
 
 //routes
 const CampingRouter = require("./src/api/routes/camping.routes");
