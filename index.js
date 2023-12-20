@@ -3,7 +3,7 @@ require("dotenv").config();
 const cors = require("cors");
 app.use(
   cors({
-    origin: ["https://www.section.io", "https://www.google.com/"],
+    origin: ["https://campcesible.vercel.app/", "http://localhost:5173/"],
   })
 );
 const connect = require("./src/utils/db");
